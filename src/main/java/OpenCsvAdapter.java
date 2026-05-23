@@ -1,10 +1,14 @@
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.opencsv.CSVReader;
 
 public class OpenCsvAdapter implements DataReader {
 
     public final String defaultCsvPath = pathToCsv();
+    private CSVReader adapteeReader;
 
     public static String pathToCsv() {
         String path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -27,14 +31,15 @@ public class OpenCsvAdapter implements DataReader {
         ScenarioStats stats = new ScenarioStats();
 
         // Use raw CSVReader instead of CsvToBeanBuilder to bypass the mixed formatting
-        try (com.opencsv.CSVReader reader = new com.opencsv.CSVReader(new java.io.FileReader(filePath))) {
+        try {
+            this.adapteeReader = new CSVReader(new FileReader(filePath));
             String[] line;
 
-            while ((line = reader.readNext()) != null) {
+            while ((line = this.adapteeReader.readNext()) != null) {
                 if (line.length < 2 || line[0].trim().isEmpty()) {
                     continue;
                 }
-
+                
                 String key = line[0].trim();
                 String value = line[1].trim();
 
@@ -53,6 +58,7 @@ public class OpenCsvAdapter implements DataReader {
                         break;
                 }
             }
+            this.adapteeReader.close();
 
             // Add the populated object to the list
             if (stats.getScenarioName() != null) {

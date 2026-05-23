@@ -2,5 +2,6 @@
 *.class
 bin/
 setup-env.ps1
+target/
 # VS Code workspace settings (optional local files)
 .vscode/

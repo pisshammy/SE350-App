@@ -8,8 +8,9 @@ public class Main {
         String testFile = "src\\csvExamples\\Ascended Tracking v3 - Challenge - 2026.05.14-22.25.01 Stats.csv";
         System.out.println("Testing CSV reading with file: " + testFile);
         List<ScenarioStats> stats = adapter.readData(testFile);
-        StatCalc calcStrategy = new AverageAccuracyCalc();
-        double average = calcStrategy.calculate(stats);
+
+        StatAnalyzer analyzer = new StatAnalyzer(new AverageAccuracyCalc());
+        double average = analyzer.execute(stats);
         System.out.println("Average Accuracy: " + average);
     }
 }
