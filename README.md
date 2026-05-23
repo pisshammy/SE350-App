@@ -26,20 +26,20 @@ The static and automatic files contain a ton of complex data because small nuanc
 
 ## App UML diagram
 
- ![UML Diagram](UML-SE350-Final-App-Hammy.png)
-
+![UML DIAGRAM](<UML SE350 Final App Hammy.png>)
 To ensure you are able to run the project independently without the game, the repo contains a prepopulated directory with my actual .csv log files. The src directory will have a script that compiles the application, launches the GUI, and runs the tracker against the included data.
 
 ### Final Submission Goal
 
 For the final submission, this application will read a directory of local example KovaaK's CSV files. It will use calculations to aggregate the player's performance data (such as average accuracy, total playtime, high scores, and improvement overtime), and display these metrics in a JavaFX Graphical User Interface (GUI). This will allow the user to visually track their aim improvement over time.
 
-### Sprint 3 Issues & Resolutions
+### Issues & Resolutions
 
 - **Git Configuration:** Some commits were accidentally made under the username `BamhamYT` instead of my primary account `hammyo-o`. I am working solo as a one-person group, and both accounts belong to me.
 
 - **Java Version Mismatch:** I got an `UnsupportedClassVersionError` when trying to execute the program via the CLI because it defaulted to an older Java 8 JRE instead of the Java 25 JDK used to compile the code. I resolved this by updating system environment variables and running through Maven (`mvn clean compile` and `mvn exec:java`).
 - **Data Parsing Complexity:** KovaaK's CSV exports are not uniform tables; they contain a mixed format of individual kill logs followed by summary statistics. This broke OpenCSV's automated `@CsvBindByName` mapping. I resolved this by no longer using the bean builder and using a raw `CSVReader` to parse the file line-by-line.
+- **Pattern Compliance:** My Sprint 3 implementation for my Adapter and Strategy patterns were not meeting proper UML standards so I had to refactor some code. `OpenCsvAdapter` now holds a `CSVReader` as a class variable to maintain an explicit reference to the Adaptee. I also created a `StatAnalyzer` class that decouples calculations from the `Main` class logic to better fit OOP principles.
 
 ### Planned Libraries
 
