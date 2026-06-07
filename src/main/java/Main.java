@@ -7,7 +7,7 @@ public class Main {
         String testFile = "src\\csvExamples\\Ascended Tracking v3 - Challenge - 2026.05.14-22.25.01 Stats.csv";
         
         System.out.println("Testing CSV reading with file: " + testFile);
-        //proxy pattern
+        //proxy pattern & adapter pattern
         DataReader reader = new CachedCsvReaderProxy();
         //read from disk and cache results
         List<ScenarioStats> stats = reader.readData(testFile);
