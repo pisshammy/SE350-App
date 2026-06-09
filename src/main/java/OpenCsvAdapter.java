@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -26,11 +27,11 @@ public class OpenCsvAdapter implements DataReader {
             if (new File(path).exists()) {
                 return path;
             } else {
-                return "./csvExamples/";
+                return "./src/csvExamples/";
             }
         } catch (Exception e) {
             System.out.println("Error determining CSV path: " + e.getMessage());
-            return "./csvExamples/";
+            return "./src/csvExamples/";
         }
     }
 
@@ -50,7 +51,7 @@ public class OpenCsvAdapter implements DataReader {
                 if (line.length < 2 || line[0].trim().isEmpty()) {
                     continue;
                 }
-                
+
                 String key = line[0].trim();
                 String value = line[1].trim();
 
