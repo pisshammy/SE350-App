@@ -9,6 +9,16 @@ public class OpenCsvAdapter implements DataReader {
 
     public final String defaultCsvPath = pathToCsv();
     private CSVReader adapteeReader;
+    private StatsDirector director;
+
+    public OpenCsvAdapter() {
+        IStatsBuilder builder = new DefaultStatsBuilder();
+        this.director = new StatsDirector(builder);
+    }
+
+    public OpenCsvAdapter(StatsDirector director) {
+        this.director = director;
+    }
 
     public static String pathToCsv() {
         String path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -24,13 +34,14 @@ public class OpenCsvAdapter implements DataReader {
         }
     }
 
-    // Fulfills the DataReader interface contract
     @Override
     public List<ScenarioStats> readData(String filePath) {
         List<ScenarioStats> resultList = new ArrayList<>();
-        ScenarioStats stats = new ScenarioStats();
+        String tempScenarioName = null;
+        double tempScore = 0.0;
+        int tempHitCount = 0;
+        int tempMissCount = 0;
 
-        // Use raw CSVReader instead of CsvToBeanBuilder to bypass the mixed formatting
         try {
             this.adapteeReader = new CSVReader(new FileReader(filePath));
             String[] line;
@@ -45,23 +56,23 @@ public class OpenCsvAdapter implements DataReader {
 
                 switch (key) {
                     case "Scenario:":
-                        stats.setScenarioName(value);
+                        tempScenarioName = value;
                         break;
                     case "Score:":
-                        stats.setScore(Double.parseDouble(value));
+                        tempScore = Double.parseDouble(value);
                         break;
                     case "Hit Count:":
-                        stats.setHitCount(Integer.parseInt(value));
+                        tempHitCount = Integer.parseInt(value);
                         break;
                     case "Miss Count:":
-                        stats.setMissCount(Integer.parseInt(value));
+                        tempMissCount = Integer.parseInt(value);
                         break;
                 }
             }
             this.adapteeReader.close();
 
-            // Add the populated object to the list
-            if (stats.getScenarioName() != null) {
+            if (tempScenarioName != null) {
+                ScenarioStats stats = director.construct(tempScenarioName, tempScore, tempHitCount, tempMissCount);
                 resultList.add(stats);
             }
             return resultList;
@@ -85,9 +96,5 @@ public class OpenCsvAdapter implements DataReader {
         OpenCsvAdapter adapter = new OpenCsvAdapter();
         String pathToCheck = args.length > 0 ? args[0] : adapter.defaultCsvPath;
         adapter.checkLogDirectory(pathToCheck);
-
-        // Example execution of the interface method:
-        // List<ScenarioStats> data = adapter.readData(pathToCheck +
-        // "\\example_scenario.csv");
     }
 }
