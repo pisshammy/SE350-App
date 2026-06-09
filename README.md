@@ -1,15 +1,15 @@
 # SE350-App
 
-## Sprint 3
+## Final Submission README
 
-This program is a stat tracker and analyzer for [Kovaaks Aim Trainer](https://store.steampowered.com/app/824270/KovaaKs/). Aim training is an important part for many competitive gamers so knowing your progression over time is important.
+This program is a stat tracker and analyzer for [Kovaaks Aim Trainer](https://store.steampowered.com/app/824270/KovaaKs/). Aim training is an important part for many competitive gamers so knowing progression over time is important.
 
-In KovaaK's, scenarios are typically 1-minute-long maps (accurately levels) created by the community to practice certain aiming techniques. Aim Trainers are typically played by competitive gamers who strive to increase their aiming within shooter games. Some players also play aim trainers for fun. Scenarios can be made with many differents including different enemy types, user and enemy movement types, speeds, and location, as well and different guns with different shooting speed, different ammo capacities, and reload times.
+In KovaaK's, scenarios are typically 1-minute-long maps created by the community to practice certain aiming techniques. Aim Trainers are typically played by competitive gamers who strive to increase their aiming within shooter games. Scenarios can be made with many differents including different enemy types, user and enemy movement types, speeds, and location, as well and different guns with different shooting speed, different ammo capacities, and reload times.
 
-When fnishing a Kovaaks scenario/map, the game automatically exports static .csv files containing the user's performance data for each RUN the user completes, one scenario exports every single run the user makes so a scenario could have dozens or even hundreds of runs.
-The static and automatic files contain a ton of complex data because small nuances most definitely matter at a high level of play. Aim is a crucial skill in competitive gaming, and analyzing performance data helps players identify areas for improvement.
+When fnishing a Kovaaks scenario/map, the game automatically exports static .csv files containing the user's performance data for each run the user completes. 
+The static files contain a ton of complex data that can matter at a high level of play. Aim is a crucial skill in competitive gaming, analyzing the performance data helps players identify areas for improvement.
 
-## Some but not all data present in the csv files that may be included in the app
+## Some of the possible data present in the csv files that could be tracked and analyzed include:
 
 - the date the run of a scenario was completed
 - scenario name
@@ -27,25 +27,21 @@ The static and automatic files contain a ton of complex data because small nuanc
 ## App UML diagram
 
 ![UML DIAGRAM](<UML SE350 Final App Hammy.png>)
-To ensure you are able to run the project independently without the game, the repo contains a prepopulated directory with my actual .csv log files. The src directory will have a script that compiles the application, launches the GUI, and runs the tracker against the included data.
-
-### Final Submission Goal
-
-For the final submission, this application will read a directory of local example KovaaK's CSV files. It will use calculations to aggregate the player's performance data (such as average accuracy, total playtime, high scores, and improvement overtime), and display these metrics in a JavaFX Graphical User Interface (GUI). This will allow the user to visually track their aim improvement over time.
 
 ### Issues & Resolutions
 
-- **Git Configuration:** Some commits were accidentally made under the username `BamhamYT` instead of my primary account `hammyo-o`. I am working solo as a one-person group, and both accounts belong to me.
+- **Git Configuration:** Some commits were accidentally made under the username `BamhamYT` instead of my primary account `hammyo-o`. I lated switched my github name to `pisshammy`, so the project has been completed by me, hammy, alone. 
 
-- **Java Version Mismatch:** I got an `UnsupportedClassVersionError` when trying to execute the program via the CLI because it defaulted to an older Java 8 JRE instead of the Java 25 JDK used to compile the code. I resolved this by updating system environment variables and running through Maven (`mvn clean compile` and `mvn exec:java`).
-- **Data Parsing Complexity:** KovaaK's CSV exports are not uniform tables; they contain a mixed format of individual kill logs followed by summary statistics. This broke OpenCSV's automated `@CsvBindByName` mapping. I resolved this by no longer using the bean builder and using a raw `CSVReader` to parse the file line-by-line.
-- **Pattern Compliance:** My Sprint 3 implementation for my Adapter and Strategy patterns were not meeting proper UML standards so I had to refactor some code. `OpenCsvAdapter` now holds a `CSVReader` as a class variable to maintain an explicit reference to the Adaptee. I also created a `StatAnalyzer` class that decouples calculations from the `Main` class logic to better fit OOP principles.
+- **Observer Pattern:** I initially planned to implement the Observer pattern to allow updates to the GUI. But, as no GUI was ever developed, I did not implement the Observer pattern as I intended. I made a resolution to this by creating new simulated runs every 2 seconds that updated the metrics and printed them to the console, demonstrating how the Observer pattern would work in a real-time scenario.
 
-### Planned Libraries
+## PreviouslyPlanned Libraries
 
-- **GUI:** JavaFX. Not implemented yet.
-- **OpenCSV:** For parsing local CSV export data from the game.
-- **JUnit:** For unit testing metric calculations.
+- **GUI:** JavaFX. Never implemented, but planned to use for the user interface to display metrics and  visualizations of the data with graphs. 
+- **JUnit:** For unit testing metric calculations. Did not implement/was not required for the current implementation, but planned to use it testing the accuracy and reliability of the metric calculations when the data tracking was more advanced.
+
+## Implemented Libraries
+- **OpenCSV:** For parsing the .csv files. Implemented in `OpenCsvAdapter.java`.
+ 
 
 ### How to Run
 
